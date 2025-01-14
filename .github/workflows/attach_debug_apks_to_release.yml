@@ -12,7 +12,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Clone repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
         with:
           ref: ${{ env.GITHUB_REF }}
 
@@ -51,15 +51,15 @@ jobs:
             fi
           done
 
-          echo "Generating sha25sums file"
-          if ! (cd "$APK_DIR_PATH"; sha256sum \
+          echo "Generating sha512sums file"
+          if ! (cd "$APK_DIR_PATH"; sha512sum \
             "${APK_BASENAME_PREFIX}_universal.apk" \
             "${APK_BASENAME_PREFIX}_arm64-v8a.apk" \
             "${APK_BASENAME_PREFIX}_armeabi-v7a.apk" \
             "${APK_BASENAME_PREFIX}_x86_64.apk" \
             "${APK_BASENAME_PREFIX}_x86.apk" \
-            > "${APK_BASENAME_PREFIX}_sha256sums"); then
-            exit_on_error "Generate sha25sums failed for '$RELEASE_VERSION_NAME' release."
+            > "${APK_BASENAME_PREFIX}_sha512sums"); then
+            exit_on_error "Generate sha512sums failed for '$RELEASE_VERSION_NAME' release."
           fi
 
           echo "Attaching APKs to github release"
@@ -69,7 +69,7 @@ jobs:
             "$APK_DIR_PATH/${APK_BASENAME_PREFIX}_armeabi-v7a.apk" \
             "$APK_DIR_PATH/${APK_BASENAME_PREFIX}_x86_64.apk" \
             "$APK_DIR_PATH/${APK_BASENAME_PREFIX}_x86.apk" \
-            "$APK_DIR_PATH/${APK_BASENAME_PREFIX}_sha256sums" \
+            "$APK_DIR_PATH/${APK_BASENAME_PREFIX}_sha512sums" \
           ; then
             exit_on_error "Attach APKs to release failed for '$RELEASE_VERSION_NAME' release."
           fi
