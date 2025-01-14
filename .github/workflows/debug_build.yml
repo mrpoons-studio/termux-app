@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@main
 
       - name: Build APKs
         shell: bash {0}
@@ -54,19 +54,19 @@ jobs:
             fi
           done
 
-          echo "Generating sha25sums file"
+          echo "Generating sha512sums file"
           if ! (cd "$APK_DIR_PATH"; sha256sum \
             "${APK_BASENAME_PREFIX}_universal.apk" \
             "${APK_BASENAME_PREFIX}_arm64-v8a.apk" \
             "${APK_BASENAME_PREFIX}_armeabi-v7a.apk" \
             "${APK_BASENAME_PREFIX}_x86_64.apk" \
             "${APK_BASENAME_PREFIX}_x86.apk" \
-            > sha256sums); then
-            exit_on_error "Generate sha25sums failed for '$RELEASE_VERSION_NAME' release."
+            > sha512sums); then
+            exit_on_error "Generate sha512sums failed for '$RELEASE_VERSION_NAME' release."
           fi
 
       - name: Attach universal APK file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@main
         with:
           name: ${{ env.APK_BASENAME_PREFIX }}_universal
           path: |
@@ -74,7 +74,7 @@ jobs:
             ${{ env.APK_DIR_PATH }}/output-metadata.json
 
       - name: Attach arm64-v8a APK file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@main
         with:
           name: ${{ env.APK_BASENAME_PREFIX }}_arm64-v8a
           path: |
@@ -82,7 +82,7 @@ jobs:
             ${{ env.APK_DIR_PATH }}/output-metadata.json
 
       - name: Attach armeabi-v7a APK file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@main
         with:
           name: ${{ env.APK_BASENAME_PREFIX }}_armeabi-v7a
           path: |
@@ -90,7 +90,7 @@ jobs:
             ${{ env.APK_DIR_PATH }}/output-metadata.json
 
       - name: Attach x86_64 APK file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@main
         with:
           name: ${{ env.APK_BASENAME_PREFIX }}_x86_64
           path: |
@@ -98,7 +98,7 @@ jobs:
             ${{ env.APK_DIR_PATH }}/output-metadata.json
 
       - name: Attach x86 APK file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@main
         with:
           name: ${{ env.APK_BASENAME_PREFIX }}_x86
           path: |
@@ -106,7 +106,7 @@ jobs:
             ${{ env.APK_DIR_PATH }}/output-metadata.json
 
       - name: Attach sha256sums file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@main
         with:
           name: sha256sums
           path: |
