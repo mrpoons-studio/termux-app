@@ -55,7 +55,7 @@ jobs:
           done
 
           echo "Generating sha512sums file"
-          if ! (cd "$APK_DIR_PATH"; sha256sum \
+          if ! (cd "$APK_DIR_PATH"; sha512sum \
             "${APK_BASENAME_PREFIX}_universal.apk" \
             "${APK_BASENAME_PREFIX}_arm64-v8a.apk" \
             "${APK_BASENAME_PREFIX}_armeabi-v7a.apk" \
@@ -105,10 +105,10 @@ jobs:
             ${{ env.APK_DIR_PATH }}/${{ env.APK_BASENAME_PREFIX }}_x86.apk
             ${{ env.APK_DIR_PATH }}/output-metadata.json
 
-      - name: Attach sha256sums file
+      - name: Attach sha512sums file
         uses: actions/upload-artifact@main
         with:
-          name: sha256sums
+          name: sha512sums
           path: |
-            ${{ env.APK_DIR_PATH }}/sha256sums
+            ${{ env.APK_DIR_PATH }}/sha512sums
             ${{ env.APK_DIR_PATH }}/output-metadata.json
